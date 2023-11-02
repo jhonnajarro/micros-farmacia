@@ -22,6 +22,9 @@ public class Producto {
     private Date fechaCrea;
     @Column(name = "fecha_mod")
     private Date fechaMod;
+
+    @Column(name = "fecha_caducidad")
+    private Date fechaCaducidad;
     private Double precio;
     private String codigo;
 

@@ -1,10 +1,10 @@
-package com.jfnc.inventariomicroservicio;
+package com.jfnc.msventa;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class InventarioMicroservicioApplicationTests {
+class MsVentaApplicationTests {
 
 	@Test
 	void contextLoads() {

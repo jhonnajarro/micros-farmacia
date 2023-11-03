@@ -1,5 +1,6 @@
 package jfnc.farmacia.productomicroservicio.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +17,6 @@ public class Inventario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idInventario;
 
-    @Column(name = "stock")
     private double stock;
     private double stockMinimo;
 
@@ -24,7 +24,7 @@ public class Inventario {
     @JoinColumn(name = "id_almacen")
     private Almacen almacen;
 
-    @OneToOne
-    @JoinColumn(name = "id_producto")
+    @OneToOne(mappedBy = "inventario")
+    @JsonIgnore
     private Producto producto;
 }

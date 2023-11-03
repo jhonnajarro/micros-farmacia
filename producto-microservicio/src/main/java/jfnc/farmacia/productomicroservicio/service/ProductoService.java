@@ -11,6 +11,6 @@ public interface ProductoService {
     Producto productoPorId(Long id);
     Producto modificarProducto(Long id, Producto producto);
 
-    Producto eliminarProducto(Long id, Producto producto);
+    Producto eliminarProducto(Long id);
 
 }

@@ -1,5 +1,6 @@
 package jfnc.farmacia.productomicroservicio.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +24,7 @@ public class Producto {
     @Column(name = "fecha_mod")
     private Date fechaMod;
 
+    private int estado;
     @Column(name = "fecha_caducidad")
     private Date fechaCaducidad;
     private Double precio;
@@ -35,6 +37,9 @@ public class Producto {
     @ManyToOne
     @JoinColumn(name = "id_categoria")
     private Categoria categoria;
-    private Integer proveedor;
+
+    @OneToOne
+    @JoinColumn(name = "id_inventario")
+    private Inventario inventario;
 
 }

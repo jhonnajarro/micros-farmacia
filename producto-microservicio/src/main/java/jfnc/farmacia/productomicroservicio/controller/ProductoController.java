@@ -32,8 +32,8 @@ public class ProductoController {
         return ResponseEntity.ok(productos);
     }
 
-    @GetMapping("/listarPorId/{id}")
-    public ResponseEntity<Producto> listarPorId(@PathVariable Long id){
+    @GetMapping("/listarPorId")
+    public ResponseEntity<Producto> listarPorId(@RequestParam Long id){
         Producto producto=productoService.productoPorId(id);
         return new ResponseEntity<>(producto,HttpStatus.OK);
     }

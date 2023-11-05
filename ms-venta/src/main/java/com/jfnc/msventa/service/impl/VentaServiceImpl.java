@@ -6,6 +6,7 @@ import com.jfnc.msventa.service.VentaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -15,6 +16,9 @@ public class VentaServiceImpl implements VentaService {
 
     @Override
     public Venta crearVenta(Venta venta) {
+        venta.getListVentas().forEach(det-> det.setVenta(venta));
+        venta.setFechaVenta(new Date());
+        venta.setTotalVenta(venta.getListVentas().stream().mapToDouble(dv->dv.getSubTotal()).sum());
         return ventaRepository.save(venta);
     }
 

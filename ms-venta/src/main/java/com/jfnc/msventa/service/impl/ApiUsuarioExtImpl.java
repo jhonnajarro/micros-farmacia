@@ -19,7 +19,7 @@ public class ApiUsuarioExtImpl {
     private RestTemplate restTemplate;
 
     public ResponseProducto obtenerProducto(Long id) {
-        String apiUrl = "localhost:55315/api/productos/listarPorId?id="+ id;
+        String apiUrl = "http://localhost:8080/api/productos/listarPorId?id="+ id;
         org.springframework.http.HttpHeaders httpHeaders = new HttpHeaders();
 
         org.springframework.http.HttpEntity<String> entity = new HttpEntity<>(httpHeaders);

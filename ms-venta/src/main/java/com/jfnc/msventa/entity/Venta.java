@@ -23,6 +23,7 @@ public class Venta {
 
     private Long idCliente;
     private Long idUsuario;
+    private Double totalVenta;
 
     @OneToMany(mappedBy = "venta" , cascade = {CascadeType.ALL})
     private List<DetalleVenta> listVentas;

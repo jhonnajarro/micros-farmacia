@@ -26,10 +26,10 @@ public class ResponseProducto {
     private Double precio;
     private String codigo;
 
-    private Long marca;
+    private Marca marca;
 
-    private Long categoria;
+    private Categoria categoria;
 
-    private Long inventario;
+    private Inventario inventario;
 
 }

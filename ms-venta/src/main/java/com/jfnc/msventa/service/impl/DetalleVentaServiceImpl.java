@@ -3,6 +3,7 @@ package com.jfnc.msventa.service.impl;
 import com.jfnc.msventa.entity.DetalleVenta;
 import com.jfnc.msventa.repository.DetalleVentaRepository;
 import com.jfnc.msventa.service.DetalleVentaService;
+import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +15,13 @@ public class DetalleVentaServiceImpl implements DetalleVentaService {
     @Autowired
     DetalleVentaRepository detalleVentaRepository;
 
+    @Autowired
+    ApiUsuarioExtImpl apiUsuarioExt;
     @Override
     public DetalleVenta crearDetalleVenta(DetalleVenta detalleVenta) {
+        Double precioProducto=apiUsuarioExt.obtenerProducto(detalleVenta.getIdProducto()).getPrecio();
+        detalleVenta.setSubTotal(detalleVenta.getCantidad()* precioProducto);
+
         return detalleVentaRepository.save(detalleVenta);
     }
 
@@ -31,6 +37,11 @@ public class DetalleVentaServiceImpl implements DetalleVentaService {
 
     @Override
     public DetalleVenta modificarDetalleVenta(DetalleVenta detalleVenta, Long id) {
+        if(detalleVentaRepository.existsById(id)){
+            Double precioProducto=apiUsuarioExt.obtenerProducto(detalleVenta.getIdProducto()).getPrecio();
+            detalleVenta.setSubTotal(detalleVenta.getCantidad()* precioProducto);
+            return detalleVentaRepository.save(detalleVenta);
+        }
         return null;
     }
 

@@ -33,7 +33,7 @@ public class CompraController {
     public ResponseEntity<Compra> guardar(@RequestBody CompraDTO compraDTO){
         Compra compraIN= modelMapper.map(compraDTO,Compra.class);
         List<DetalleCompra> detalles= compraDTO.getDetalles();
-        System.out.println("LA LISTA DE DETALLES ES  ::::::::::::::::::: "+compraIN.getDetalles());
+
         List<DetalleCompra> detallesBD=detalles.stream().map(detalleCompra -> detalleCompraService.crearDetalleCompra(detalleCompra)).collect(Collectors.toList());
         compraIN.setDetalles(detallesBD);
         Compra compraBD=compraService.crearCompra(compraIN);

@@ -38,6 +38,8 @@ public class CompraServiceImpl implements CompraService {
     @Override
     public Compra modificarCompra(Long id, Compra compra) {
         if(compraRepository.existsById(id)){
+            compra.setFechaMod(new Date());
+            compra.setTotalCompra(compra.getDetalles().stream().mapToDouble(dc-> dc.getSubTotal()).sum());
             return compraRepository.save(compra);
         }
         return null;
@@ -47,6 +49,7 @@ public class CompraServiceImpl implements CompraService {
     public void eliminarCompra(Long id) {
         if(compraRepository.existsById(id)){
             Compra compra = compraRepository.findById(id).orElse(null);
+
             compraRepository.save(compra);
         }
     }

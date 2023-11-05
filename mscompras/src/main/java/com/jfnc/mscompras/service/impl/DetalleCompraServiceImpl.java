@@ -41,9 +41,6 @@ public class DetalleCompraServiceImpl implements DetalleCompraService {
     @Override
     public DetalleCompra modificarDetalleCompra(Long id, DetalleCompra detalleCompra) {
         if(detalleCompraRepository.existsById(id)){
-            if(apiProductoExt.obtenerProducto(detalleCompra.getProducto()).getIdProducto()==null){
-                throw new RuntimeException("El Producto no existe");
-            }
             detalleCompra.setSubTotal(detalleCompra.getCantidad()* detalleCompra.getPrecioCompra());
             return detalleCompraRepository.save(detalleCompra);
         }

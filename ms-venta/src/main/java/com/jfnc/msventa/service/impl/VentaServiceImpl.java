@@ -14,8 +14,15 @@ public class VentaServiceImpl implements VentaService {
     @Autowired
     VentaRepository ventaRepository;
 
+    @Autowired
+    ApiUsuarioExtImpl apiUsuarioExt;
+
     @Override
-    public Venta crearVenta(Venta venta) {
+    public Venta crearVenta(Venta venta)throws Exception {
+        Long idUsuario=apiUsuarioExt.obtenerUsuario(venta.getIdUsuario()).getIdUsuario();
+        if(idUsuario==null){
+            throw new RuntimeException("Usuario no existe" +idUsuario);
+        }
         venta.getListVentas().forEach(det-> det.setVenta(venta));
         venta.setFechaVenta(new Date());
         venta.setTotalVenta(venta.getListVentas().stream().mapToDouble(dv->dv.getSubTotal()).sum());

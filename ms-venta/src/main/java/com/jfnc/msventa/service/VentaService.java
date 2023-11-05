@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface VentaService {
 
-    Venta crearVenta(Venta venta);
+    Venta crearVenta(Venta venta) throws Exception;
 
     List<Venta> listarVenta();
 

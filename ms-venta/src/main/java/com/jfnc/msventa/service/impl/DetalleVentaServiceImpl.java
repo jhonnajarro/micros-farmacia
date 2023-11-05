@@ -16,10 +16,10 @@ public class DetalleVentaServiceImpl implements DetalleVentaService {
     DetalleVentaRepository detalleVentaRepository;
 
     @Autowired
-    ApiUsuarioExtImpl apiUsuarioExt;
+    private ApiProductoExtImpl apiProductoExt;
     @Override
     public DetalleVenta crearDetalleVenta(DetalleVenta detalleVenta) {
-        Double precioProducto=apiUsuarioExt.obtenerProducto(detalleVenta.getIdProducto()).getPrecio();
+        Double precioProducto=apiProductoExt.obtenerProducto(detalleVenta.getIdProducto()).getPrecio();
         detalleVenta.setSubTotal(detalleVenta.getCantidad()* precioProducto);
 
         return detalleVentaRepository.save(detalleVenta);
@@ -38,7 +38,7 @@ public class DetalleVentaServiceImpl implements DetalleVentaService {
     @Override
     public DetalleVenta modificarDetalleVenta(DetalleVenta detalleVenta, Long id) {
         if(detalleVentaRepository.existsById(id)){
-            Double precioProducto=apiUsuarioExt.obtenerProducto(detalleVenta.getIdProducto()).getPrecio();
+            Double precioProducto=apiProductoExt.obtenerProducto(detalleVenta.getIdProducto()).getPrecio();
             detalleVenta.setSubTotal(detalleVenta.getCantidad()* precioProducto);
             return detalleVentaRepository.save(detalleVenta);
         }

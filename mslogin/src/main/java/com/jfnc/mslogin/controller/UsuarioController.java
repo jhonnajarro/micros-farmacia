@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.PathParam;
 import java.util.List;
 
 @RestController
@@ -22,8 +23,8 @@ public class UsuarioController {
         return new ResponseEntity<>(usuarios,HttpStatus.OK);
     }
 
-    @GetMapping("/usuarioPorId/{id}")
-    public ResponseEntity<Usuario> usuarioPorId(@PathVariable Long id){
+    @GetMapping("/usuarioPorId")
+    public ResponseEntity<Usuario> usuarioPorId(@RequestParam Long id){
         Usuario usuario= usuarioService.usuarioPorId(id);
         return new ResponseEntity<>(usuario,HttpStatus.OK);
     }

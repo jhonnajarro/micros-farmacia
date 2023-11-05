@@ -6,6 +6,7 @@ import com.jfnc.msventa.entity.Venta;
 import com.jfnc.msventa.model.ResponseProducto;
 import com.jfnc.msventa.service.DetalleVentaService;
 import com.jfnc.msventa.service.VentaService;
+import com.jfnc.msventa.service.impl.ApiProductoExtImpl;
 import com.jfnc.msventa.service.impl.ApiUsuarioExtImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class VentaController {
     DetalleVentaService detalleVentaService;
 
     @Autowired
-    private ApiUsuarioExtImpl apiUsuarioExt;
+    private ApiProductoExtImpl apiProductoExt;
 
     @Autowired
     ModelMapper modelMapper;
@@ -39,7 +40,7 @@ public class VentaController {
 
     @GetMapping("/obtenerProductoOfVentas")
     public ResponseProducto obtenerProducto(@RequestParam(required = true) Long id) {
-        return apiUsuarioExt.obtenerProducto(id);
+        return apiProductoExt.obtenerProducto(id);
     }
 
     @GetMapping("/ventaPorId/{id}")
@@ -49,11 +50,12 @@ public class VentaController {
     }
 
     @PostMapping("/guardarVenta")
-    public ResponseEntity<Venta> guardar(@RequestBody VentaDTO ventaDTO){
+    public ResponseEntity<Venta> guardar(@RequestBody VentaDTO ventaDTO) throws Exception {
         Venta ventaIN=modelMapper.map(ventaDTO,Venta.class);
         List<DetalleVenta> detalles= ventaIN.getListVentas();
         List<DetalleVenta> detalleVentas=detalles.stream().map(detalleVenta -> detalleVentaService.crearDetalleVenta(detalleVenta)).collect(Collectors.toList());
         ventaIN.setListVentas(detalleVentas);
+
         Venta ventaBD=ventaService.crearVenta(ventaIN);
         return new ResponseEntity<>(ventaBD, HttpStatus.CREATED);
     }

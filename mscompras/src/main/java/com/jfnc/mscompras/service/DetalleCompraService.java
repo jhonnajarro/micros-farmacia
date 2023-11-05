@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface DetalleCompraService {
 
-    DetalleCompra crearDetalleCompra(DetalleCompra detalleCompra);
+    DetalleCompra crearDetalleCompra(DetalleCompra detalleCompra) throws Exception;
 
     List<DetalleCompra> listarDetalleCompra();
 

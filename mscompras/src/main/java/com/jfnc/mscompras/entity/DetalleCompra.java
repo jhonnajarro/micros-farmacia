@@ -1,6 +1,7 @@
 package com.jfnc.mscompras.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jfnc.mscompras.model.ResponseProducto;
 import lombok.Getter;
 import lombok.Setter;
 

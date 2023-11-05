@@ -40,15 +40,38 @@ public class CompraController {
 
 
     @PostMapping("/registrarCompra")
-    public ResponseEntity<Compra> guardar(@RequestBody CompraDTO compraDTO){
+    public ResponseEntity<Compra> guardar(@RequestBody CompraDTO compraDTO) throws Exception{
         Compra compraIN= modelMapper.map(compraDTO,Compra.class);
         List<DetalleCompra> detalles= compraDTO.getDetalles();
 
-        List<DetalleCompra> detallesBD=detalles.stream().map(detalleCompra -> detalleCompraService.crearDetalleCompra(detalleCompra)).collect(Collectors.toList());
+        List<DetalleCompra> detallesBD=detalles.stream().map(detalleCompra -> {
+            try {
+                return detalleCompraService.crearDetalleCompra(detalleCompra);
+            } catch (Exception e) {
+                throw new RuntimeException("El producto no existe "+detalleCompra.getProducto());
+            }
+        }).collect(Collectors.toList());
         compraIN.setDetalles(detallesBD);
         Compra compraBD=compraService.crearCompra(compraIN);
 
         return new ResponseEntity<>(compraBD, HttpStatus.CREATED);
     }
 
+    @PutMapping("/modificarCompra/{id}")
+    public ResponseEntity<Compra> modificar(@PathVariable Long id, @RequestBody CompraDTO compraDTO){
+        Compra compraIN= modelMapper.map(compraDTO,Compra.class);
+        List<DetalleCompra> detalles= compraIN.getDetalles();
+
+        List<DetalleCompra> detallesBD=detalles.stream().map(detalleCompra -> {
+            try {
+                return detalleCompraService.modificarDetalleCompra(detalleCompra.getIdDetalleCompra(),detalleCompra);
+            } catch (Exception e) {
+                throw new RuntimeException("El producto no existe "+detalleCompra.getProducto());
+            }
+        }).collect(Collectors.toList());
+        compraIN.setDetalles(detallesBD);
+        Compra compraBD=compraService.modificarCompra(compraIN.getIdCompra(),compraIN);
+
+        return new ResponseEntity<>(compraBD, HttpStatus.OK);
+    }
 }
